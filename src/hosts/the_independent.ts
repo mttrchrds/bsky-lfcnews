@@ -12,7 +12,7 @@ const main = async (): Promise<{ articleUri: string; hashTag: string }> => {
   const $ = cheerio.load(data);
   const title = $("body").find("h2:first");
   if (title) {
-    const anchor = $(title).find("a");
+    const anchor = title.closest("a");
     if (anchor) {
       const href = anchor.attr("href");
       if (href) {

@@ -70,16 +70,7 @@ async function main() {
     if (articleUri && !previousUris.includes(articleUri)) {
       const { title, description, thumb } = await scrapeMeta(agent, articleUri);
       if (title && description) {
-        if (hashTag === "#TheIndependent") {
-          let output = "";
-          output += `${hashTag} | ${articleUri}\n`;
-          output += `Title: ${title}\n`;
-          output += `Description: ${description}\n`;
-          output += `Thumb: ${thumb?.mimeType} (mimetype), ${thumb?.size} (size)\n`;
-          console.log(output);
-        } else {
-          await post(agent, hashTag, articleUri, title, description, thumb);
-        }
+        await post(agent, hashTag, articleUri, title, description, thumb);
       }
     }
   });

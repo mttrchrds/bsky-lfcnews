@@ -1,43 +1,26 @@
-import axios from "axios";
+import { fetchHTML } from "../utils/data";
+import * as cheerio from "cheerio";
 
 const baseUri = "https://www.liverpoolfc.com";
+const newsPath = "/news";
 const hashTag = "#LiverpoolFootballClub";
-const kickerBlacklist = ["Media watch"];
-
-type LiverpoolAPIEntry = {
-  id: number;
-  url: string;
-  kicker: string;
-};
-
-type LiverpoolAPIResponse = {
-  count: number;
-  results: LiverpoolAPIEntry[];
-};
 
 const main = async (): Promise<{ articleUri: string; hashTag: string }> => {
   let articleUri = "";
-  let data: LiverpoolAPIResponse | null = null;
-  try {
-    const response = await axios.get(
-      "https://backend.liverpoolfc.com/lfc-rest-api/news?perPage=1"
-    );
-    data = response.data;
-    if (data) {
-      const results = data.results;
-      if (results.length > 0) {
-        if (!kickerBlacklist.includes(results[0].kicker)) {
-          articleUri = `${baseUri}${results[0].url}`;
-        }
+  const data: string | undefined = await fetchHTML(`${baseUri}${newsPath}`);
+  const $ = cheerio.load(data);
+  const title = $("body").find(`[data-testid="article-card__link"]:first`);
+  if (title) {
+    const href = title.attr("href");
+    if (href) {
+      if (href.includes("://")) {
+        articleUri = href;
+      } else {
+        articleUri = `${baseUri}${href}`;
       }
     }
-  } catch (err) {
-    console.log("Liverpool FC API error: ", err);
   }
-  return {
-    articleUri,
-    hashTag,
-  };
+  return { articleUri, hashTag };
 };
 
 export default main;

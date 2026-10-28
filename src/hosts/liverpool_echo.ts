@@ -10,7 +10,7 @@ const main = async (): Promise<{ articleUri: string; hashTag: string }> => {
   let articleUri = "";
   const data: string | undefined = await fetchHTML(`${baseUri}${newsPath}`);
   const $ = cheerio.load(data);
-  const title = $("body").find(".headline:first");
+  const title = $("body").find(".teaser-hero .headline:first");
   if (title) {
     const href = title.attr("href");
     if (href) {
