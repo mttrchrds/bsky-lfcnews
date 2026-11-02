@@ -16,7 +16,7 @@ jobs:
           node-version-file: ".nvmrc"
       - run: npm ci
       - name: Build and create post
-        run: npm post-espn
+        run: npm run post-espn
         env:
           BSKY_IDENTIFIER: ${{ secrets.BSKY_IDENTIFIER }}
           BSKY_PASSWORD: ${{ secrets.BSKY_PASSWORD }}

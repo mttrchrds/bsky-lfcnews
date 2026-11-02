@@ -29,7 +29,6 @@ export const newPostUri = async (
       if (embed) {
         const embedExternal = embed.external as PostExternalType;
         if (embedExternal.uri) {
-          console.log("URI", embedExternal.uri);
           previousUris.push(embedExternal.uri);
         }
       }
