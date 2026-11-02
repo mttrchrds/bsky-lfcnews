@@ -2,7 +2,7 @@ name: "Posts ESPN article to Bluesky"
 
 on:
   schedule:
-    - cron: "10 6-23 * * *"
+    - cron: "12 6-23 * * *"
   workflow_dispatch: # Allows manual trigger from GitHub UI
 
 jobs:
