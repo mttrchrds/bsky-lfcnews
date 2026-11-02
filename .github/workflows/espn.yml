@@ -1,0 +1,22 @@
+name: "Posts ESPN article to Bluesky"
+
+on:
+  schedule:
+    - cron: "10 6-23 * * *"
+  workflow_dispatch: # Allows manual trigger from GitHub UI
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Use Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: ".nvmrc"
+      - run: npm ci
+      - name: Build and create post
+        run: npm post-espn
+        env:
+          BSKY_IDENTIFIER: ${{ secrets.BSKY_IDENTIFIER }}
+          BSKY_PASSWORD: ${{ secrets.BSKY_PASSWORD }}

@@ -5,6 +5,11 @@
     "dev": "npx nodemon",
     "build": "rimraf ./build && tsc",
     "start": "npm run build && node build/index.js",
+    "post-espn": "npm run build && node build/espn.js",
+    "post-echo": "npm run build && node build/liverpool_echo.js",
+    "post-lfc": "npm run build && node build/liverpool_football_club.js",
+    "post-mirror": "npm run build && node build/the_mirror.js",
+    "post-guardian": "npm run build && node build/the_guardian.js",
     "log-hosts": "npx ts-node ./src/hosts/log_hosts.ts"
   },
   "dependencies": {
